@@ -1,6 +1,12 @@
+use rand::Rng;
 use std::io;
 
 fn main() {
+    // instantiating the random number gen
+    // thread_rng() instantiates rng n seeds it
+    let secret_number = rand::thread_rng()
+        // generate random num between range start..=end
+        .gen_range(1..=100);
     // introducing the game
     println!("Guess the number!");
     println!("Please input the number: ");
