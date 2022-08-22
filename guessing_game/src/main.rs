@@ -2,12 +2,20 @@ use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
 
+// to use a function to generate the random number
+fn gen_secret_number() -> u32 {
+    rand::thread_rng()
+        // generate random num between range start..=end
+        .gen_range(1..=100)
+}
+
 fn main() {
     // instantiating the random number gen
     // thread_rng() instantiates rng n seeds it
-    let secret_number = rand::thread_rng()
-        // generate random num between range start..=end
-        .gen_range(1..=100);
+    // let secret_number = rand::thread_rng()
+    //     // generate random num between range start..=end
+    //     .gen_range(1..=100);
+    let secret_number = gen_secret_number();
 
     println!("Guess the number!");
     // the loop system
@@ -23,7 +31,7 @@ fn main() {
             // this takes input from terminal and pipes it to the mutable reference of the guess var
             .read_line(&mut guess)
             // handle error also returns either Ok with value of read or Err with trace
-            .expect("Failed to read line");
+            .expect("Failed to read value");
 
         // convert guess string to unsigned 32b integer
         let guess: u32 = match guess.trim().parse() {
