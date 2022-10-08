@@ -1,10 +1,12 @@
 
+#[derive(Debug)]
 struct User {
     name: String,
     age: i32,
     email: String,
     is_active: bool
 }
+
 
 fn main() {
     let user1 = User {
