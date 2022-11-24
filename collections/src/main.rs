@@ -19,4 +19,13 @@ fn main() {
     for i in &v {
         println!("{}", i)
     }
+
+    // mutating a mut vector using an iterator
+    println!("Now mutating a vector with an iterator");
+    let mut v = vec![100, 32, 53];
+    for i in &mut v{
+        *i += 50;
+        println!("{}", i)
+    }
+
 }
