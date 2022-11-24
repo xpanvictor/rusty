@@ -14,4 +14,9 @@ fn main() {
         Some(elem) => println!("Element at index 4 is {}", elem),
         None => println!("There is no third element")
     }
+
+    // for loop for a vector
+    for i in &v {
+        println!("{}", i)
+    }
 }
