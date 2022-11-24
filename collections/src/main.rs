@@ -28,4 +28,20 @@ fn main() {
         println!("{}", i)
     }
 
+    // using an enum to store different types in a vector
+    #[derive(Debug)]
+    enum SpreadsheetCell {
+        Int(i32),
+        Float(f64),
+        Text(String)
+    }
+
+    let row = vec![
+        SpreadsheetCell::Int(5),
+        SpreadsheetCell::Float(6.7),
+        SpreadsheetCell::Text(String::from("Hello world"))
+    ];
+
+    println!("{:?}", row)
+
 }
