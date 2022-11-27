@@ -42,6 +42,22 @@ fn main() {
         SpreadsheetCell::Text(String::from("Hello world"))
     ];
 
-    println!("{:?}", row)
+    println!("{:?}", row);
+
+    // Strings, let's go
+    let data = "initial content";
+    // make a string out of data
+    let s = data.to_string();
+    
+    let mut foo_bar = String::from("foo");
+    foo_bar.push_str("bar");
+    println!("{}", foo_bar);
+    // while push_str takes a string literal, push takes just a char
+
+    let s1 = String::from("tic");
+    let s2 = String::from("tac");
+    let s3 = String::from("toe");
+
+    let s = format!("{}-{}-{}", s1, s2, s3);
 
 }
