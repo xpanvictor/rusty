@@ -12,14 +12,14 @@ mod back_of_house {
     #[derive(Debug)]
     pub struct Breakfast {
         pub toast: String,
-        seasona_fruit: String
+        seasonal_fruit: String
     }
 
     impl Breakfast {
         pub fn summer(toast: &str) -> Breakfast {
             Breakfast {
                 toast: String::from(toast),
-                seasona_fruit: String::from("peach")
+                seasonal_fruit: String::from("peach")
             }
         }
     }
