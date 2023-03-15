@@ -1,5 +1,6 @@
 use std::io::{self, Read};
-use std::fs::File;
+use std::fs;
+use std::path::Path;
 
 fn read_username_from_file() -> Result<String, io::Error> {
     // ----------Normal implementation-----------
@@ -31,7 +32,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
     // Ok(s)
 
     // ----------Using std function
-    fs::read_to_string("username.txt")
+    fs::read_to_string(Path::new("./src/username.txt"))
 }
 
 fn main() {
