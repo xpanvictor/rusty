@@ -16,10 +16,18 @@ fn read_username_from_file() -> Result<String, io::Error> {
     //     Ok(_) => Ok(s),
     //     Err(e) => Err(e)
     // }
+
     // -----------Using the ? operator implementation--------
-    let file = File::open("username.txt")?;
+    // let file = File::open("username.txt")?;
+    // let mut s = String::new();
+    // file.read_to_string(&mut s)?;
+    // Ok(s)
+
+    // ----------Using ? with chaining-------------------
     let mut s = String::new();
-    file.read_to_string(&mut s)?;
+
+    File::open("username.txt")?.read_to_string(&mut s)?;
+
     Ok(s)
 }
 
