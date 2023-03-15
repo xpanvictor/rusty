@@ -24,11 +24,14 @@ fn read_username_from_file() -> Result<String, io::Error> {
     // Ok(s)
 
     // ----------Using ? with chaining-------------------
-    let mut s = String::new();
+    // let mut s = String::new();
+    //
+    // File::open("username.txt")?.read_to_string(&mut s)?;
+    //
+    // Ok(s)
 
-    File::open("username.txt")?.read_to_string(&mut s)?;
-
-    Ok(s)
+    // ----------Using std function
+    fs::read_to_string("username.txt")
 }
 
 fn main() {
