@@ -9,15 +9,17 @@ struct NewsArticle {
 
 impl Summary for NewsArticle {}
 
-struct Tweet {
+// read can be num or false for not read
+struct Tweet<T> {
     author: String,
     content: String,
     reply: bool,
+    read: T
 }
 
-impl Summary for Tweet {
+impl Summary for Tweet<u32> {
     fn summarize(&self) -> String {
-        format!("Tweet summary by {}: {}...", self.author, self.content)
+        format!("Tweet read {} times; by {}: {}...", self.read, self.author, self.content)
     }
 }
 
@@ -34,7 +36,8 @@ fn main() {
     let tweet = Tweet {
         author: String::from("xpan"),
         reply: false,
-        content: String::from("Hello world, I love dancing, lol, lfg!")
+        content: String::from("Hello world, I love dancing, lol, lfg!"),
+        read: 13
     };
     println!("Summary for tweet: {}", tweet.summarize());
 }
