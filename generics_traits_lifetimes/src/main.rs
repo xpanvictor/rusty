@@ -1,3 +1,4 @@
+use std::any::type_name;
 use generics_traits_lifetimes::Summary;
 
 struct NewsArticle {
@@ -7,7 +8,11 @@ struct NewsArticle {
     content: String
 }
 
-impl Summary for NewsArticle {}
+impl Summary for NewsArticle {
+    fn attach_author(&self) -> String {
+        format!("@{}", self.author)
+    }
+}
 
 // read can be num or false for not read
 struct Tweet<T> {
@@ -18,8 +23,11 @@ struct Tweet<T> {
 }
 
 impl Summary for Tweet<u32> {
+    fn attach_author(&self) -> String {
+        format!("@{}", self.author)
+    }
     fn summarize(&self) -> String {
-        format!("Tweet read {} times; by {}: {}...", self.read, self.author, self.content)
+        format!("Tweet read {} times; by {}: {}...", self.read, self.attach_author(), self.content)
     }
 }
 
