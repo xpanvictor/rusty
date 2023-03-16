@@ -4,3 +4,7 @@ pub trait Summary {
         String::from("Read more...")
     }
 }
+
+pub fn notify(item: &impl Summary) {
+    println!("{}", item.summarize());
+}

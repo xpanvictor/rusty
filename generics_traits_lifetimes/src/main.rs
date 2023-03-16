@@ -1,5 +1,5 @@
 use std::any::type_name;
-use generics_traits_lifetimes::Summary;
+use generics_traits_lifetimes::{notify, Summary};
 
 struct NewsArticle {
     headline: String,
@@ -47,5 +47,5 @@ fn main() {
         content: String::from("Hello world, I love dancing, lol, lfg!"),
         read: 13
     };
-    println!("Summary for tweet: {}", tweet.summarize());
+    notify(&tweet);
 }
