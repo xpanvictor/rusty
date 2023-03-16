@@ -1,10 +1,10 @@
 use std::io::{self, Read};
-use std::fs;
+use std::fs::{self, File};
 use std::path::Path;
 
 fn read_username_from_file() -> Result<String, io::Error> {
     // ----------Normal implementation-----------
-    // let file = File::open("username.txt");
+    // let file = File::open("src/username.txt");
     //
     // let mut file = match file {
     //     Ok(file) => file,
@@ -19,7 +19,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
     // }
 
     // -----------Using the ? operator implementation--------
-    // let file = File::open("username.txt")?;
+    // let file = File::open("/src/username.txt")?;
     // let mut s = String::new();
     // file.read_to_string(&mut s)?;
     // Ok(s)
