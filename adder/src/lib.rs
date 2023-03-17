@@ -1,5 +1,9 @@
-pub fn add(left: usize, right: usize) -> usize {
+pub fn add(left: i32, right: i32) -> i32 {
     left + right
+}
+
+pub fn add_two(num: i32) -> i32 {
+    add(num, 2)
 }
 
 #[derive(Debug)]
@@ -14,6 +18,10 @@ impl Rectangle {
     }
 }
 
+pub fn greeting(name: &str) -> String {
+    format!("Hello {}", name)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -22,6 +30,11 @@ mod tests {
     fn adds_two_numbers() {
         let result = add(2, 2);
         assert_eq!(result, 4);
+    }
+
+    #[test]
+    fn adds_two_to_a_numer() {
+        assert_eq!(add_two(4), 6);
     }
 
     #[test]
@@ -48,5 +61,16 @@ mod tests {
     #[test]
     fn smaller_cannot_hold_larger() {
         assert!(!SMALLER.can_hold(&LARGER));
+    }
+
+    #[test]
+    fn greeting_contains_name() {
+        let name = "Victor";
+        let result = greeting(name);
+        assert!(
+            result.contains(name),
+            "Greeting didn't contain name, value was {}",
+            result
+        );
     }
 }
