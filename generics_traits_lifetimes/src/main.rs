@@ -1,5 +1,4 @@
-use std::any::type_name;
-use generics_traits_lifetimes::{longest, notify, Summary};
+use generics_traits_lifetimes::{longest_with_an_announcement, notify, Summary};
 
 struct NewsArticle {
     headline: String,
@@ -15,7 +14,7 @@ impl Summary for NewsArticle {
 }
 
 // read can be num or false for not read
-struct Tweet<T> {
+struct Tweet<T > {
     author: String,
     content: String,
     reply: bool,
@@ -49,6 +48,6 @@ fn main() {
     };
     notify(&tweet);
 
-    let longest_author = longest(&news_article.author, &tweet.author);
+    let longest_author = longest_with_an_announcement(&news_article.author, &tweet.author, &news_article.location);
     println!("The longest author is {}", longest_author);
 }

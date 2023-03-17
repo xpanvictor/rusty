@@ -1,3 +1,4 @@
+use std::fmt::Display;
 
 pub trait Summary {
     fn attach_author(&self) -> String;
@@ -16,4 +17,15 @@ pub fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     }else {
         y
     }
+}
+
+pub fn longest_with_an_announcement<'a, T> (
+    x: &'a str,
+    y: &'a str,
+    ann: T
+) -> &'a str
+    where T: Display,
+{
+    println!("Announcement: {}", ann);
+    longest(x, y)
 }
