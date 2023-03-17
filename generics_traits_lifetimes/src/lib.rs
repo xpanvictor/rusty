@@ -1,3 +1,4 @@
+
 pub trait Summary {
     fn attach_author(&self) -> String;
     fn summarize(&self) -> String {
@@ -5,6 +6,14 @@ pub trait Summary {
     }
 }
 
-pub fn notify(item: &impl Summary) {
+pub fn notify(item: &(impl Summary)) {
     println!("{}", item.summarize());
+}
+
+pub fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    }else {
+        y
+    }
 }

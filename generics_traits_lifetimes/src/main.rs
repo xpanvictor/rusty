@@ -1,5 +1,5 @@
 use std::any::type_name;
-use generics_traits_lifetimes::{notify, Summary};
+use generics_traits_lifetimes::{longest, notify, Summary};
 
 struct NewsArticle {
     headline: String,
@@ -35,7 +35,7 @@ fn main() {
     let newsArticle = NewsArticle {
         headline: String::from("How to catch a tiger"),
         location: String::from("Nigeria"),
-        author: String::from("xpan"),
+        author: String::from("xpanvictor"),
         content: String::from(
             "Well, forest, tranquilizers, shoot, chain and simple, you have a tiger. Disclaimer, you could die"
         )
@@ -48,4 +48,7 @@ fn main() {
         read: 13
     };
     notify(&tweet);
+
+    let longest_author = longest(&newsArticle.author, &tweet.author);
+    println!("The longest author is {}", longest_author);
 }
