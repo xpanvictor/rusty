@@ -29,17 +29,24 @@ mod tests {
         panic!("Just testing to fail");
     }
 
+    // data for Rectangle testing
+    const LARGER: Rectangle = Rectangle {
+        width: 8,
+        height: 7
+    };
+    const SMALLER: Rectangle = Rectangle {
+        width: 5,
+        height: 1
+    };
+
     #[test]
     fn larger_can_hold_smaller() {
-        let larger = Rectangle {
-            width: 8,
-            height: 7
-        };
-        let smaller = Rectangle {
-            width: 5,
-            height: 1
-        };
-        // test larger must hold smaller
-        assert!(larger.can_hold(&smaller));
+        // test LARGER must hold SMALLER
+        assert!(LARGER.can_hold(&SMALLER));
+    }
+
+    #[test]
+    fn smaller_cannot_hold_larger() {
+        assert!(!SMALLER.can_hold(&LARGER));
     }
 }
