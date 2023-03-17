@@ -42,6 +42,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn fails_test() {
         panic!("Just testing to fail");
     }
