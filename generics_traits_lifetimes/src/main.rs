@@ -32,7 +32,7 @@ impl Summary for Tweet<u32> {
 }
 
 fn main() {
-    let newsArticle = NewsArticle {
+    let news_article = NewsArticle {
         headline: String::from("How to catch a tiger"),
         location: String::from("Nigeria"),
         author: String::from("xpanvictor"),
@@ -40,7 +40,7 @@ fn main() {
             "Well, forest, tranquilizers, shoot, chain and simple, you have a tiger. Disclaimer, you could die"
         )
     };
-    println!("Summary of news article: {}", newsArticle.summarize());
+    println!("Summary of news article: {}", news_article.summarize());
     let tweet = Tweet {
         author: String::from("xpan"),
         reply: false,
@@ -49,6 +49,6 @@ fn main() {
     };
     notify(&tweet);
 
-    let longest_author = longest(&newsArticle.author, &tweet.author);
+    let longest_author = longest(&news_article.author, &tweet.author);
     println!("The longest author is {}", longest_author);
 }
