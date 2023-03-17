@@ -22,6 +22,10 @@ pub fn greeting(name: &str) -> String {
     format!("Hello {}", name)
 }
 
+pub fn wanna_panic() {
+    panic!("Hey just panicked for fun")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -72,5 +76,11 @@ mod tests {
             "Greeting didn't contain name, value was {}",
             result
         );
+    }
+
+    #[test]
+    #[should_panic(expected="fun")]
+    fn testing_if_panic_panics() {
+        wanna_panic()
     }
 }
