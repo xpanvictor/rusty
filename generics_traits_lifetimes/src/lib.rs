@@ -7,7 +7,7 @@ pub trait Summary {
     }
 }
 
-pub fn notify(item: &(impl Summary)) {
+pub fn notify(item: &impl Summary) {
     println!("{}", item.summarize());
 }
 
