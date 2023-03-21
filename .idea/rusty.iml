@@ -9,11 +9,13 @@
       <sourceFolder url="file://$MODULE_DIR$/closures_iterators/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/add/add_one/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/add/adder/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/smart_pointers/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/error_handling/target" />
       <excludeFolder url="file://$MODULE_DIR$/generics_traits_lifetimes/target" />
       <excludeFolder url="file://$MODULE_DIR$/adder/target" />
       <excludeFolder url="file://$MODULE_DIR$/closures_iterators/target" />
       <excludeFolder url="file://$MODULE_DIR$/add/target" />
+      <excludeFolder url="file://$MODULE_DIR$/smart_pointers/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
