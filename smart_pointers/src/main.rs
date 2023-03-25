@@ -1,5 +1,6 @@
+use std::cell::RefCell;
 use std::ops::Deref;
-use std::rc::Rc;
+use std::rc::{Rc, Weak};
 use crate::List::{Cons, Nil};
 
 enum List {
@@ -21,6 +22,13 @@ impl<T> Deref for MyBox<T> {
     fn deref(&self) -> &Self::Target {
         &self.0
     }
+}
+
+#[derive(Debug)]
+struct Node {
+    value: i32,
+    children: RefCell<Vec<Rc<Node>>>,
+    parent: RefCell<Weak<Node>>,
 }
 
 fn main() {
@@ -51,5 +59,24 @@ fn main() {
     let x = MyBox::new(val);
     assert_eq!(5, val);
     assert_eq!(5, *x);
+
+    let leaf = Rc::new(
+        Node {
+            value: 3,
+            children: RefCell::new(vec![]),
+            parent: RefCell::new(Weak::new()),
+        }
+    );
+    println!("leaf parent initially = {:?}", leaf.parent.borrow().upgrade());
+    let branch = Rc::new(
+        Node {
+            value: 5,
+            children: RefCell::new(vec![Rc::clone(&leaf)]),
+            parent: RefCell::new(Weak::new()),
+        }
+    );
+    // mutate leaf and make its parent branch
+    *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
+    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
     println!("Hello, world!");
 }
