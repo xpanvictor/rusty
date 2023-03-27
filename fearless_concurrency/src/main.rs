@@ -1,19 +1,28 @@
 use std::thread;
 use std::time::Duration;
+use std::sync::mpsc;
 
 fn main() {
-    let handle = thread::spawn(|| {
-        for i in 1..10 {
-            println!("Number {i} from child thread");
-            thread::sleep(Duration::from_millis(1));
+    let (tx, rx) = mpsc::channel();
+
+    let handle = thread::spawn(move || {
+        let vals = vec![
+            "hello",
+            "from",
+            "the",
+            "thread"
+        ];
+        for val in vals {
+            tx.send(val).unwrap();
+            thread::sleep(Duration::from_secs(1));
         }
     });
 
-    for i in 1..5 {
-        println!("Number from main {i}");
-        thread::sleep(Duration::from_millis(1));
+   let received = rx;
+    for rec in received {
+        println!("Got this: {rec}")
     }
 
     // block main thread execution or exist until handle thread ends
-    handle.join().unwrap();
+    // handle.join().unwrap();
 }
