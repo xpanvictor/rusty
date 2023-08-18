@@ -15,9 +15,9 @@ fn main() {
     // let secret_number = rand::thread_rng()
     //     // generate random num between range start..=end
     //     .gen_range(1..=100);
-    let secret_number = gen_secret_number();
+            let secret_number = gen_secret_number();
 
-    println!("Guess the number!");
+                        println!("Guess the number!");
     // the loop system
     loop {
         // introducing the game
@@ -31,7 +31,7 @@ fn main() {
             // this takes input from terminal and pipes it to the mutable reference of the guess var
             .read_line(&mut guess)
             // handle error also returns either Ok with value of read or Err with trace
-            .expect("Failed to read line!")
+            .expect("Failed to read line!");
 
         // convert guess string to unsigned 32b integer
         let guess: u32 = match guess.trim().parse() {
