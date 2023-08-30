@@ -1,4 +1,3 @@
-
 fn main() {
     // one way of declaring vectors by instantiating without values
     // let v: Vec<i32> = Vec::new();
@@ -13,7 +12,7 @@ fn main() {
 
     match v.get(3) {
         Some(elem) => println!("Element at index 4 is {}", elem),
-        None => println!("There is no third element")
+        None => println!("There is no third element"),
     }
 
     // for loop for a vector
@@ -24,7 +23,7 @@ fn main() {
     // mutating a mut vector using an iterator
     println!("Now mutating a vector with an iterator");
     let mut v = vec![100, 32, 53];
-    for i in &mut v{
+    for i in &mut v {
         *i += 50;
         println!("{}", i)
     }
@@ -34,13 +33,13 @@ fn main() {
     enum SpreadsheetCell {
         Int(i32),
         Float(f64),
-        Text(String)
+        Text(String),
     }
 
     let row = vec![
         SpreadsheetCell::Int(5),
         SpreadsheetCell::Float(6.7),
-        SpreadsheetCell::Text(String::from("Hello world"))
+        SpreadsheetCell::Text(String::from("Hello world")),
     ];
 
     println!("{:?}", row);
@@ -49,7 +48,7 @@ fn main() {
     let data = "initial content";
     // make a string out of data
     let s = data.to_string();
-    
+
     let mut foo_bar = String::from("foo");
     foo_bar.push_str("bar");
     println!("{}", foo_bar);
@@ -77,7 +76,7 @@ fn main() {
     let mut scoresHash: HashMap<_, _> = teams.into_iter().zip(initial_scores.into_iter()).collect();
     let name = String::from("Blue");
     println!("The blue's score is {:?}", scoresHash.get(&name));
-    
+
     // checking if an hashmap has a key else update it
     scoresHash.entry(String::from("Yellow")).or_insert(300);
     scoresHash.entry(String::from("White")).or_insert(40);
@@ -92,5 +91,4 @@ fn main() {
         *count += 1;
     }
     println!("{:#?}", map);
-
 }
