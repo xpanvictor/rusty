@@ -2,6 +2,18 @@ use std::io::{self, Read};
 use std::fs::{self, File};
 use std::path::Path;
 
+
+fn updated_read_from_file() -> Result<string, io::Error> {
+    // this uses question mark at the end to handle error case
+    // OR 
+    // File::open("src")?.read_to_string(&mut username);
+    //
+    let mut username_file = File::open("./src/username.txt")?;
+    let mut username = String::new();
+    username_file.read_to_string(&mut username)?;
+    Ok(username)
+}
+
 fn read_username_from_file() -> Result<String, io::Error> {
     // ----------Normal implementation-----------
     // let file = File::open("src/username.txt");
