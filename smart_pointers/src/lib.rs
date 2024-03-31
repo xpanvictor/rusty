@@ -3,7 +3,8 @@ pub trait Messenger {
 }
 
 pub struct LimitTracker<'a, T>
-where T: Messenger{
+    where T: Messenger
+{
     messenger: &'a T,
     value: usize,
     max: usize
