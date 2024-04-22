@@ -15,13 +15,13 @@ fn main() {
     // let secret_number = rand::thread_rng()
     //     // generate random num between range start..=end
     //     .gen_range(1..=100);
-            let secret_number = gen_secret_number();
+    let secret_number = gen_secret_number();
 
-                        println!("Guess the number!");
+    println!("Guess the number!");
     // the loop system
     loop {
         // introducing the game
-        println!("Please input the number: ");
+        println!("Please input the number: {}", 34);
 
         // creating a mutable variable with `mut`; without which it'll be immutable
         let mut guess = String::new();
