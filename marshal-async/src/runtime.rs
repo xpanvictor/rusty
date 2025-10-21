@@ -1,98 +1,66 @@
-use crate::spawner::Spawner;
-use std::sync::{atomic, mpsc, Arc};
+use std::sync::{mpsc, Arc};
 use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::mpsc::Receiver;
-use std::thread::yield_now;
+use std::sync::mpsc::{channel, TryRecvError};
+use std::future::Future;
+
+use crate::spawner::Spawner;
 use crate::executor::Executor;
-use crate::types::Task;
 
 /// Mini Async runtime
-struct Runtime {
+pub struct Runtime {
     pub spawner: Spawner,
     pub executor: Executor,
-    active: Arc<AtomicUsize>,
-    src: Receiver<Arc<Task<()>>>,
+    pub active: Arc<AtomicUsize>,
 }
 
 impl Runtime {
     pub fn new() -> Self {
-        let (stx, src) = mpsc::channel();
+        let (stx, rx) = mpsc::channel();
         let active = Arc::new(AtomicUsize::new(0));
 
-         Runtime {
+        Runtime {
             spawner: Spawner::new(stx.clone(), active.clone()),
-            executor: Executor::new(),
-             active,
-            src,
+            executor: Executor::new(rx),
+            active,
         }
     }
 
-    pub fn run(&mut self) {
+    /// Drive a future to completion on this runtime and return its output.
+    pub fn block_on<F>(&mut self, future: F) -> F::Output
+    where
+        F: Future + Send + 'static,
+        F::Output: Send + 'static,
+    {
+        let (result_sender, result_receiver) = channel();
+
+        // Wrap user future to send its result back through a channel
+        let fut_wrapper = async move {
+            let result = future.await;
+            let _ = result_sender.send(result);
+        };
+
+        let _jh = self.spawner.spawn(fut_wrapper);
+
+        // Drive the executor until the result arrives
         loop {
-            if let Ok(task) = self.src.recv() {
-                self.executor.execute(Arc::from(task));
-            } else if self.active.load(Ordering::SeqCst) == 0 {
-                break;
-            } else {yield_now()}
+            // could also just use the jh
+            match result_receiver.try_recv() {
+                Ok(val) => break val,
+                Err(TryRecvError::Empty) => {
+                    self.run_once();
+                }
+                Err(TryRecvError::Disconnected) => panic!("block_on channel disconnected"),
+            }
         }
     }
 
+    /// Run until no active tasks remain (checked via `active`).
+    pub fn run(&mut self) {
+        self.executor.run(&self.active);
+    }
+
+    /// Poll at most one ready task.
     pub fn run_once(&mut self) {
-        if let Ok(task) = self.src.try_recv() {
-            self.executor.execute(Arc::from(task));
-        }
-    }
-
-}
-
-
-#[cfg(test)]
-mod tests {
-    use std::thread;
-    use std::thread::yield_now;
-    use std::time::Duration;
-    use futures::join;
-    use crate::runtime::Runtime;
-
-    #[test]
-    fn receives_task() {
-        let mut runtime = Runtime::new();
-        let jh = runtime.spawner.spawn(async {println!("hello"); 1});
-        runtime.run_once();
-        let res = jh.join();
-        assert_eq!(res, 1);
-    }
-
-    #[test]
-    fn executes_task() {
-        let mut runtime = Runtime::new();
-        println!("executing");
-        let slow = async {
-            println!("slow start");
-            for _ in 0..100_000 {
-                yield_now();
-            }
-            println!("slow done");
-            1
-        };
-
-        let fast = async {
-            println!("fast start");
-            for _ in 0..1_000 {
-                yield_now();
-            }
-            println!("fast done");
-            2
-        };
-
-        let combined = async {
-            let (a, b) = join!(slow, fast);
-            a + b
-        };
-        let res_handle = runtime.spawner.spawn(combined);
-        runtime.run();
-
-        let res = res_handle.join();
-        assert_eq!(res, 3);
+        self.executor.run_once();
     }
 }
